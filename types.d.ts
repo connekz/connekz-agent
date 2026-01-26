@@ -6,19 +6,18 @@ export type ConnekzToolCallPayload = {
 /**
  * Enum for voice agent statuses
  */
-export enum ConnekzAgentStatus {
-  DISCONNECTED = 'DISCONNECTED',
-  STOPPED = 'STOPPED',
-  INITIATING = 'INITIATING',
-  LISTENING = 'LISTENING',
-  SPEAKING = 'SPEAKING',
-  SLEEPING = 'SLEEPING',
-  USER_SPEAKING = 'USER_SPEAKING',
-  THINKING = 'THINKING',
-  EXECUTING = 'EXECUTING',
-  ERROR = 'ERROR',
-  IDLE = 'IDLE',
-}
+export type ConnekzAgentStatus =
+  'DISCONNECTED' |
+  'STOPPED' |
+  'INITIATING' |
+  'LISTENING' |
+  'SPEAKING' |
+  'SLEEPING' |
+  'USER_SPEAKING' |
+  'THINKING' |
+  'EXECUTING' |
+  'ERROR' |
+  'IDLE';
 
 export type ConnekzTranscript = {
   role: 'user' | 'ai';
