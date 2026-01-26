@@ -1,0 +1,94 @@
+{
+  "name": "@connekz/connekz-agent",
+  "private": false,
+  "type": "module",
+  "version": "0.5.0",
+  "description": "A package for Connekz clients to integrate Connekz Agent into their applications.",
+  "main": "dist/connekz-agent.umd.js",
+  "module": "dist/connekz-agent.es.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "types.d.ts",
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "exports": {
+    ".": {
+      "types": {
+        "require": "./dist/index.d.ts",
+        "default": "./dist/index.d.ts"
+      },
+      "import": "./dist/connekz-agent.es.js",
+      "require": "./dist/connekz-agent.umd.js"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "run-p type-check \"build-only {@}\" --",
+    "build:lib": "npm run clean && vite build --mode lib && echo 'Generating type definitions...' && vue-tsc --project tsconfig.app.json --emitDeclarationOnly --outDir dist && echo 'Build completed.'",
+    "build:types": "vue-tsc --project tsconfig.app.json --emitDeclarationOnly --outDir dist",
+    "preview": "vite preview",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build --force",
+    "lint": "eslint . --fix",
+    "format": "prettier --write src/",
+    "build:test": "cross-env NODE_ENV=development node --experimental-modules commands/build-test.mjs",
+    "clean": "rm -rf dist",
+    "publish": "node --experimental-modules commands/publish.mjs"
+  },
+  "keywords": [
+    "chat",
+    "connekz",
+    "vue",
+    "vuetify",
+    "widget"
+  ],
+  "author": "Connekz",
+  "license": "MIT",
+  "homepage": "https://www.connekz.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/connekz/connekz-agent.git"
+  },
+  "bugs": {
+    "url": "https://github.com/connekz/connekz-agent/issues"
+  },
+  "dependencies": {
+    "@sentry/vue": "^10.22.0",
+    "@vueuse/core": "^13.1.0",
+    "dompurify": "^3.2.5",
+    "emoji-mart-vue-fast": "^15.0.4",
+    "markdown-it": "^14.1.0",
+    "pinia": "^3.0.2",
+    "socket.io-client": "^4.8.1",
+    "three": "^0.180.0",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@tsconfig/node22": "^22.0.1",
+    "@types/markdown-it": "^14.1.2",
+    "@types/node": "^22.14.0",
+    "@types/three": "^0.180.0",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "@vue/eslint-config-prettier": "^10.1.0",
+    "@vue/eslint-config-typescript": "^14.3.0",
+    "@vue/tsconfig": "^0.7.0",
+    "autoprefixer": "^10.4.21",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.18.0",
+    "eslint-plugin-vue": "^9.32.0",
+    "fs-extra": "^11.3.0",
+    "globals": "^16.0.0",
+    "npm-run-all2": "^7.0.2",
+    "postcss": "^8.5.3",
+    "prettier": "^3.4.2",
+    "sass-embedded": "^1.87.0",
+    "typescript": "~5.8.0",
+    "typescript-eslint": "^8.31.1",
+    "vite": "^6.2.4",
+    "vite-plugin-vue-devtools": "^7.7.2",
+    "vue-tsc": "^2.2.8"
+  }
+}

@@ -1,0 +1,25 @@
+Connekz NPM Package License Agreement
+
+Copyright (c) 2026 Connekz Limited. All rights reserved.
+
+This software is proprietary to Connekz Limited. It is provided as a developer toolkit for integrating Connekz AI capabilities into your own projects, using valid Connekz instance credentials.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software via NPM to:
+
+1. Use, copy, and integrate it into your own software projects, including commercial and resellable applications.
+2. Distribute the integrated software (e.g., as part of your bundled product), provided the Connekz NPM package is not redistributed standalone or in unmodified form.
+
+Subject to the following conditions:
+
+- The software may not be modified, reverse-engineered, decompiled, or disassembled.
+- Standalone redistribution, sublicensing, renting, leasing, or creation of derivative works (beyond integration) requires explicit written permission from Connekz Limited.
+- Use is limited to projects connecting to authorized Connekz instances with valid credentials. Unauthorized use is prohibited.
+- This software is provided "AS IS" without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and non-infringement.
+
+Connekz Limited reserves the right to terminate this license at any time for any reason.
+
+Governing Law: This license shall be governed by the laws of New Zealand.
+
+For inquiries, contact: contact@connekz.com
+
+By using this software, you agree to these terms.
