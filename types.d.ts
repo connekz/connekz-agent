@@ -1,4 +1,4 @@
-export type ToolCallPayload = {
+export type ConnekzToolCallPayload = {
   arguments: Record<string, any>;
   name: string;
 };
@@ -6,7 +6,7 @@ export type ToolCallPayload = {
 /**
  * Enum for voice agent statuses
  */
-export enum VoiceAgentStatus {
+export enum ConnekzAgentStatus {
   DISCONNECTED = 'DISCONNECTED',
   STOPPED = 'STOPPED',
   INITIATING = 'INITIATING',
@@ -20,7 +20,7 @@ export enum VoiceAgentStatus {
   IDLE = 'IDLE',
 }
 
-export interface ConnekzConversation {
+export type ConnekzTranscript = {
   role: 'user' | 'ai';
   message: string;
   at: string; // ISO date string
@@ -50,10 +50,6 @@ export type ConnekzOptions = {
   userIdentity?: string;
   baseUrl?: string; // Base URL for the connekz instance
 };
-
-export type ConnekzAgentStatus = VoiceAgentStatus;
-export type ConnekzTranscript = ConnekzConversation;
-export type ConnekzToolCallPayload = ToolCallPayload;
 
 // New: Subscription types
 export type Unsubscriber = () => void;
