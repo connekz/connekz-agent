@@ -4,7 +4,7 @@
 
 Human-like AI agent for seamless integration into websites, apps, and automations. This npm package allows developers to embed the Connekz agent as a customer assistant, task runner, and more.
 
-## Description
+## Introduction
 
 Connekz Agent is part of the Connekz developer toolkit, enabling AI-driven interactions in your projects. It supports natural conversations, built-in tools for tasks like bookings and website navigation, and easy integration via npm.
 
@@ -21,7 +21,7 @@ Connekz Agent is part of the Connekz developer toolkit, enabling AI-driven inter
 Install via npm:
 
 ```bash
-npm install @connekz/chat
+npm install @connekz/connekz-agent
 ```
 
 ## Usage
@@ -30,7 +30,7 @@ Import and initialize the agent in your Vue.js project (compatible with Vue 3). 
 ## Initialization Example
 
 ```typescript
-import init, { type ConnekzInstance, type ConnekzAgentStatus, type ConnekzToolCallPayload } from '@connekz/chat';
+import init, { type ConnekzInstance, type ConnekzAgentStatus, type ConnekzToolCallPayload } from '@connekz/connekz-agent';
 
 const connekzInstance: ConnekzInstance = init({
   clientId: 'your-client-id', // Required
@@ -143,7 +143,7 @@ connekzSocket.cleanup(); // Remove listeners
 ### Basic Voice Agent on a React website
 ```jsx
 import React, { useEffect, useState } from 'react';
-import init from '@connekz/chat';
+import init from '@connekz/connekz-agent';
 
 function App() {
   const [instance, setInstance] = useState(null);
@@ -213,7 +213,7 @@ export default App;
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import init from '@connekz/chat';
+import init from '@connekz/connekz-agent';
 
 const instance = ref(null);
 const isActive = ref(false);
@@ -249,7 +249,7 @@ const toggleAgent = () => {
 ### Plain JavaScript Example
 ```javascript
 // Initialize in a script tag or main.js
-import init from '@connekz/chat';
+import init from '@connekz/connekz-agent';
 
 const connekzInstance = init({
   clientId: 'your-client-id',
