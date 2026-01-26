@@ -2,7 +2,7 @@
   "name": "@connekz/connekz-agent",
   "private": false,
   "type": "module",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "description": "A package for Connekz clients to integrate Connekz Agent into their applications.",
   "main": "dist/connekz-agent.umd.js",
   "module": "dist/connekz-agent.es.js",
@@ -88,6 +88,7 @@
     "typescript": "~5.8.0",
     "typescript-eslint": "^8.31.1",
     "vite": "^6.2.4",
+    "vite-plugin-dts": "^4.5.4",
     "vite-plugin-vue-devtools": "^7.7.2",
     "vue-tsc": "^2.2.8"
   }

@@ -1,9 +1,32 @@
-// index.d.ts
-import 'unfonts.css';
-import type {ConnekzConversation} from "@/store/connekz.ts";
-import type {VoiceAgentStatus} from "@/composable/useVoiceAgent.ts";
-import type {ToolCallPayload} from "@/index.ts"; // Added: For ref types in exposure
+export type ToolCallPayload = {
+  arguments: Record<string, any>;
+  name: string;
+};
 
+/**
+ * Enum for voice agent statuses
+ */
+export enum VoiceAgentStatus {
+  DISCONNECTED = 'DISCONNECTED',
+  STOPPED = 'STOPPED',
+  INITIATING = 'INITIATING',
+  LISTENING = 'LISTENING',
+  SPEAKING = 'SPEAKING',
+  SLEEPING = 'SLEEPING',
+  USER_SPEAKING = 'USER_SPEAKING',
+  THINKING = 'THINKING',
+  EXECUTING = 'EXECUTING',
+  ERROR = 'ERROR',
+  IDLE = 'IDLE',
+}
+
+export interface ConnekzConversation {
+  role: 'user' | 'ai';
+  message: string;
+  at: string; // ISO date string
+  conversationId: number;
+  forcedDisplay?: boolean; // Whether force to display this message
+}
 
 // Export types for consumers of the package
 export type ConnekzOptions = {
