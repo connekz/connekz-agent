@@ -7,6 +7,7 @@ export type ConnekzToolCallPayload = {
  * Enum for voice agent statuses
  */
 export type ConnekzAgentStatus =
+  'NOT_STARTED' |
   'DISCONNECTED' |
   'STOPPED' |
   'INITIATING' |
