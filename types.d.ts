@@ -51,6 +51,19 @@ export type ConnekzOptions = {
   baseUrl?: string; // Base URL for the connekz instance
 };
 
+export type ConnectionQuality = {
+  signalStrength: 0 | 1 | 2 | 3;
+  speedMbps: number | null;
+  isWeakForVoice: boolean;
+  effectiveType: string | null;
+};
+
+export type ConnekzError = {
+  code: string;
+  message: string;
+  timestamp: number;
+};
+
 // New: Subscription types
 export type Unsubscriber = () => void;
 export interface SocketSubscribeAPI {
@@ -65,6 +78,8 @@ export interface AgentSubscribeAPI {
   onAgentWaveformUpdate: (cb: (value: number) => void) => Unsubscriber;
   onTranscriptUpdate: (cb: (value: readonly ConnekzConversation[]) => void) => Unsubscriber;
   onToolCall: (cb: (payload: ConnekzToolCallPayload) => Promise<string>) => Unsubscriber;
+  onConnectionQualityChange: (cb: (value: ConnectionQuality) => void) => Unsubscriber;
+  onError: (cb: (value: ConnekzError) => void) => Unsubscriber;
 }
 
 // Headless Socket API exposure (initial values + actions + subs)
