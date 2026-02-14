@@ -2,6 +2,10 @@
 
 All notable changes to @connekz/connekz-agent will be documented in this file.
 
+## [1.2.6] - 2026-02-15
+### Fixed
+- - UI issue fixes v1.0
+
 ## [1.2.6] - 2026-02-06
 ### Fixed
 - Signal strength monitor added
