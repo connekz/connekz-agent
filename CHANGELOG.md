@@ -2,6 +2,10 @@
 
 All notable changes to @connekz/connekz-agent will be documented in this file.
 
+## [1.2.6] - 2026-02-16
+### Added
+- Mic health monitoring setup added
+
 ## [1.2.6] - 2026-02-15
 ### Fixed
 - Audio pickup issue fix v1.0
