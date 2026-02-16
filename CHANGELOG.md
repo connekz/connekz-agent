@@ -2,6 +2,10 @@
 
 All notable changes to @connekz/connekz-agent will be documented in this file.
 
+## [1.3.1] - 2026-02-16
+### Added
+- Further voice improvements v1.1
+
 ## [1.3.0] - 2026-02-16
 ### Added
 - Further voice improvements v1.0
