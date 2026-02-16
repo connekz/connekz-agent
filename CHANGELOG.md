@@ -1,4 +1,7 @@
-# Changelog
+## [1.3.2] - 2026-02-16 (Patch Release)
+
+### Changed
+- Network speed measurement improved
 
 All notable changes to @connekz/connekz-agent will be documented in this file.
 
