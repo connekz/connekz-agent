@@ -1,12 +1,12 @@
+## [1.3.5] - 2026-02-18 (Patch Release)
+
+### Changed
+- error handling improved
+
 ## [1.3.4] - 2026-02-18 (Patch Release)
 
 ### Added
-
-### Changed
-
-### Fixed
-
-### Security
+- auto socket connection setup added
 
 ## [1.3.3] - 2026-02-18 (Patch Release)
 
