@@ -1,3 +1,18 @@
+## [1.3.4] - 2026-02-18 (Patch Release)
+
+### Added
+
+### Changed
+
+### Fixed
+
+### Security
+
+## [1.3.3] - 2026-02-18 (Patch Release)
+
+### Added
+- auto socket connection setup added
+
 ## [1.3.2] - 2026-02-16 (Patch Release)
 
 ### Changed

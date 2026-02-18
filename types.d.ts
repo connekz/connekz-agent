@@ -58,8 +58,24 @@ export type ConnectionQuality = {
   effectiveType: string | null;
 };
 
+/**
+ * Error codes for Connekz Agent errors.
+ *
+ * CNKZ_ERR_1001 - Unable to reach the Connekz server (wrong URL, server down, network issue)
+ * CNKZ_ERR_1002 - Invalid client ID or client secret
+ * CNKZ_ERR_1003 - Usage quota exceeded (out of tokens)
+ * CNKZ_ERR_1004 - Weak network connection (voice unreliable)
+ * CNKZ_ERR_1005 - Agent runtime error
+ */
+export type ConnekzErrorCode =
+  | 'CNKZ_ERR_1001'
+  | 'CNKZ_ERR_1002'
+  | 'CNKZ_ERR_1003'
+  | 'CNKZ_ERR_1004'
+  | 'CNKZ_ERR_1005';
+
 export type ConnekzError = {
-  code: string;
+  code: ConnekzErrorCode;
   message: string;
   timestamp: number;
 };
