@@ -13590,7 +13590,7 @@ function x2(e) {
 }
 async function j2() {
   try {
-    const e = `/worklet-processor.js?_cb=${Date.now()}`, t = performance.now();
+    const e = `https://storage.connekz.com/common/scripts/worklet-processor.js?_cb=${Date.now()}`, t = performance.now();
     await (await fetch(e, { cache: "no-store" })).blob();
     const i = performance.now() - t;
     return Math.round(i);
