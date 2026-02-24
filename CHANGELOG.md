@@ -1,3 +1,8 @@
+## [1.3.6] - 2026-02-24 (Patch Release)
+
+### Changed
+- internet speed monitor improved
+
 ## [1.3.5] - 2026-02-18 (Patch Release)
 
 ### Changed
