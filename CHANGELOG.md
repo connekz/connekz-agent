@@ -1,3 +1,13 @@
+## [1.4.0] - 2026-03-25 (Minor Release)
+
+### Added
+
+### Changed
+
+### Fixed
+
+### Security
+
 ## [1.3.7] - 2026-02-24 (Patch Release)
 
 ### Fixed
