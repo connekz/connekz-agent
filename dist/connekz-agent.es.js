@@ -9830,14 +9830,15 @@ const zr = /* @__PURE__ */ _f("layout", {
     baseUrl: null,
     clientId: null,
     clientSecret: null,
-    userIdentity: null
+    userIdentity: null,
+    platform: null
   }),
   persist: !0,
   actions: {
     setConfigs(e) {
       this.baseDomain = e.baseDomain, this.baseUrl = e.baseUrl, this.clientId = e.clientId, this.clientSecret = e.clientSecret;
       let t = e.userIdentity || this.userIdentity;
-      !t && window && (t = window.localStorage.getItem("userIdentity") || null), this.userIdentity = t || `cg-${crypto.randomUUID()}-${Date.now()}`, window && window.localStorage.setItem("userIdentity", this.userIdentity), zr().setChatAppInitStatus("success");
+      !t && window && (t = window.localStorage.getItem("userIdentity") || null), this.userIdentity = t || `cg-${crypto.randomUUID()}-${Date.now()}`, this.platform = e.platform || null, window && window.localStorage.setItem("userIdentity", this.userIdentity), zr().setChatAppInitStatus("success");
     }
   }
 }), Kt = /* @__PURE__ */ Object.create(null);
@@ -13107,7 +13108,7 @@ function C2() {
       authorization: `Bearer ${k}`,
       localTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone
     };
-    e.clientId && (y.clientId = e.clientId), e.userIdentity && (y.userIdentity = e.userIdentity);
+    e.clientId && (y.clientId = e.clientId), e.userIdentity && (y.userIdentity = e.userIdentity), e.platform && (y.platform = e.platform);
     const V = tr(e.baseDomain || "https://api.connekz.com", {
       query: y,
       path: "/ws/",
@@ -13216,7 +13217,7 @@ function C2() {
       authorization: `Bearer ${y}`,
       localTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone
     };
-    e.clientId && (V.clientId = e.clientId), e.userIdentity && (V.userIdentity = e.userIdentity);
+    e.clientId && (V.clientId = e.clientId), e.userIdentity && (V.userIdentity = e.userIdentity), e.platform && (V.platform = e.platform);
     const _ = tr(e.baseDomain || "https://api.connekz.com", {
       query: V,
       path: "/ws/",
@@ -17012,7 +17013,8 @@ function Q4(e, t) {
     baseUrl: e.baseUrl ? `${e.baseUrl}/v1/api` : "https://api.connekz.com/v1/api",
     clientId: i ? null : e.clientId,
     clientSecret: i || e.clientSecret,
-    userIdentity: e.userIdentity
+    userIdentity: e.userIdentity,
+    platform: e._platform || null
   });
 }
 const R4 = (e) => {
@@ -17121,17 +17123,17 @@ const R4 = (e) => {
       throw new Error(`Unknown component key: ${e}`);
   }
 }, V4 = (e) => {
-  if (!e.clientId || !e.clientSecret)
+  if (!!!e._paut && (!e.clientId || !e.clientSecret))
     throw new Error("clientId and clientSecret are required");
   if (!Co) {
-    const { pinia: a, api: i, cleanupSubs: r } = R4(e);
-    Co = a, ea = i, Nr = r, i.connekzSocket.connect();
+    const { pinia: i, api: r, cleanupSubs: n } = R4(e);
+    Co = i, ea = r, Nr = n, r.connekzSocket.connect();
   }
   Bo || (Bo = {
     unmount: () => {
-      var i, r, n, o;
-      (r = (i = ea == null ? void 0 : ea.connekzAgent) == null ? void 0 : i.stopAgent) == null || r.call(i), (o = (n = ea == null ? void 0 : ea.connekzSocket) == null ? void 0 : n.cleanup) == null || o.call(n), Object.values(Jr).forEach((f) => {
-        Object.values(f).forEach((u) => u.unmount());
+      var r, n, o, f;
+      (n = (r = ea == null ? void 0 : ea.connekzAgent) == null ? void 0 : r.stopAgent) == null || n.call(r), (f = (o = ea == null ? void 0 : ea.connekzSocket) == null ? void 0 : o.cleanup) == null || f.call(o), Object.values(Jr).forEach((u) => {
+        Object.values(u).forEach((l) => l.unmount());
       }), Jr = {
         chatWindow: {},
         aiSphere: {},
@@ -17141,16 +17143,16 @@ const R4 = (e) => {
     },
     ...ea
   });
-  const t = (a, i) => {
-    if (i != null && i.mountElementId) {
-      const r = i.mountElementId;
-      if (!Jr[a][r]) {
-        const n = J4(a), o = N4(n, r, i, Co, ea);
-        Jr[a][r] = o;
+  const a = (i, r) => {
+    if (r != null && r.mountElementId) {
+      const n = r.mountElementId;
+      if (!Jr[i][n]) {
+        const o = J4(i), f = N4(o, n, r, Co, ea);
+        Jr[i][n] = f;
       }
     }
   };
-  return t("chatWindow", e.chatWindow), t("aiSphere", e.aiSphere), t("transcription", e.transcription), t("connekzControls", e.connekzControls), Bo;
+  return a("chatWindow", e.chatWindow), a("aiSphere", e.aiSphere), a("transcription", e.transcription), a("connekzControls", e.connekzControls), Bo;
 };
 export {
   V4 as default
