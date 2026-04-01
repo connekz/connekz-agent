@@ -1,4 +1,4 @@
-## [1.5.0] - 2026-04-01 (Minor Release)
+## [1.5.1] - 2026-04-01 (Patch Release)
 
 ### Added
 
@@ -7,6 +7,11 @@
 ### Fixed
 
 ### Security
+
+## [1.5.0] - 2026-04-01 (Minor Release)
+
+### Security
+- Security enhancements
 
 ## [1.4.1] - 2026-03-25 (Patch Release)
 

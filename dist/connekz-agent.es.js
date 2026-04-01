@@ -17018,7 +17018,7 @@ function Jb(e, t) {
   $f(t).setConfigs({
     baseDomain: e.baseUrl ? e.baseUrl : "https://api.connekz.com",
     baseUrl: e.baseUrl ? `${e.baseUrl}/v1/api` : "https://api.connekz.com/v1/api",
-    clientId: i ? null : e.clientId,
+    clientId: i ? e.clientId || null : e.clientId,
     clientSecret: i || e.clientSecret,
     userIdentity: e.userIdentity,
     platform: e._platform || null

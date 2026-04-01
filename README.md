@@ -333,3 +333,110 @@ async function handleToolCall(tool: ConnekzToolCallPayload): Promise<string> {
 ### Tool Call Response:
 Always return a string (plain text or JSON.stringify for structured data).
 
+---
+
+## On-Demand Tools & Memories (v1.5.0+)
+
+By default, tools and memories are loaded automatically via semantic search based on conversation context. With **on-demand loading**, you can explicitly control which tools and memories are available in a session.
+
+### Setup
+
+1. In the Connekz developer portal, create a tool or memory and set **Load Mode** to `On-Demand`.
+2. Assign a unique **Slug** (e.g., `navigate-dashboard`, `onboarding-context`).
+3. From your app, call `setSessionTools()` with an array of slugs to load.
+
+### Usage
+
+```typescript
+// Load specific tools and memories into the active session
+connekzInstance.connekzAgent.setSessionTools([
+  'navigate-to-page',
+  'fill-form-field',
+  'onboarding-welcome-context',
+]);
+
+// Replace with a different set (previous on-demand items are removed)
+connekzInstance.connekzAgent.setSessionTools([
+  'dashboard-tools',
+  'search-products',
+]);
+
+// Clear all on-demand tools/memories
+connekzInstance.connekzAgent.setSessionTools([]);
+```
+
+### How It Works
+
+- **Auto tools/memories** (default): Loaded via semantic search every conversation turn. Best for general-purpose knowledge.
+- **On-demand tools/memories**: Only loaded when your app explicitly requests them by slug. Not included in semantic search results.
+- Both types run in parallel — auto and on-demand items are merged in the active session.
+- Calling `setSessionTools()` again replaces the previous on-demand set.
+- Max 30 slugs per call.
+
+### Server Confirmation
+
+The server emits a `session-tools-updated` event (via `cnkz-voice-agent` channel) with:
+```json
+{ "type": "session-tools-updated", "data": { "tools": ["tool-name-1"], "memories": 2 } }
+```
+
+---
+
+## Developer API: Usage Tracking
+
+### Get Total Token Usage
+
+Retrieve aggregated token usage for your instance within a date range (max 1 month).
+
+```
+GET /api/v1/developer/usage/total
+```
+
+**Headers:**
+```
+Authorization: Bearer <your-secret-key>
+X-Client-Id: <your-client-id>
+```
+
+**Query Parameters:**
+| Param | Required | Description |
+|-------|----------|-------------|
+| `startDate` | Yes | ISO 8601 date (e.g., `2026-04-01`) |
+| `endDate` | Yes | ISO 8601 date (e.g., `2026-04-30`) |
+| `userIdentity` | No | Filter by guest user identity |
+
+**Response:**
+```json
+{
+  "totalConnekzTokens": 142.5,
+  "sessionCount": 47,
+  "periodStart": "2026-04-01",
+  "periodEnd": "2026-04-30"
+}
+```
+
+**With userIdentity filter:**
+```json
+{
+  "totalConnekzTokens": 12.3,
+  "sessionCount": 5,
+  "periodStart": "2026-04-01",
+  "periodEnd": "2026-04-30",
+  "userIdentity": "user-abc-123"
+}
+```
+
+### User Identity Tracking
+
+When initializing the agent with `userIdentity`, all token usage is tagged with that identity:
+
+```typescript
+const instance = init({
+  clientId: 'your-client-id',
+  clientSecret: 'your-secret',
+  userIdentity: 'user-abc-123',  // Tagged on all usage records
+});
+```
+
+This allows per-user usage tracking on shared instances (e.g., onboarding flows where multiple users share one instance).
+
