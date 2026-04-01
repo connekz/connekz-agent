@@ -1,22 +1,22 @@
+## [1.5.0] - 2026-04-01 (Minor Release)
+
+### Added
+
+### Changed
+
+### Fixed
+
+### Security
+
 ## [1.4.1] - 2026-03-25 (Patch Release)
 
 ### Added
-
-### Changed
-
-### Fixed
-
-### Security
+- On-demand tools and memory support
 
 ## [1.4.0] - 2026-03-25 (Minor Release)
 
-### Added
-
-### Changed
-
-### Fixed
-
 ### Security
+- Security enhancements
 
 ## [1.3.7] - 2026-02-24 (Patch Release)
 
