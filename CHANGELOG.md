@@ -1,3 +1,18 @@
+## [1.5.2] - 2026-06-23 (Patch Release)
+
+### Added
+
+### Changed
+
+- Minor lint cleanup in `Icon.vue` (quote style).
+
+### Fixed
+
+- Socket.IO now connects with `withCredentials: true` so the AWS ALB sticky-session cookie (`AWSALBCORS`, `SameSite=None`) is sent on cross-origin requests. Without it, long-polling sessions were routed to different backend instances behind the load balancer and failed with HTTP 400 ("Session ID unknown").
+- `setCurrentConversationId` no longer resets the active audio batch when a repeated `THINKING` status arrives for the same conversation (prevents killing in-flight audio).
+
+### Security
+
 ## [1.5.1] - 2026-04-01 (Patch Release)
 
 ### Added
