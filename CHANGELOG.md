@@ -1,3 +1,9 @@
+## [2.0.0] - 2026-06-23 (Major Release)
+
+### Added
+- Cross redis session support
+- Support for multiple redis instances
+
 ## [1.5.2] - 2026-06-23 (Patch Release)
 
 ### Added
