@@ -2,7 +2,7 @@
   "name": "@connekz/connekz-agent",
   "private": false,
   "type": "module",
-  "version": "2.0.0",
+  "version": "2.2.0",
   "description": "A package for Connekz clients to integrate Connekz Agent into their applications.",
   "main": "./dist/connekz-agent.umd.js",
   "module": "./dist/connekz-agent.es.js",
@@ -22,8 +22,7 @@
       },
       "import": "./dist/connekz-agent.es.js",
       "require": "./dist/connekz-agent.umd.js"
-    },
-    "./connekz-agent.css": "./dist/connekz-agent.css"
+    }
   },
   "scripts": {
     "dev": "vite",

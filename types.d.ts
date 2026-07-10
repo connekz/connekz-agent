@@ -88,11 +88,11 @@ export interface SocketSubscribeAPI {
 }
 
 export interface AgentSubscribeAPI {
-  onAgentStatusChange: (cb: (value: VoiceAgentStatus) => void) => Unsubscriber;
+  onAgentStatusChange: (cb: (value: ConnekzAgentStatus) => void) => Unsubscriber;
   onMicStatusChange: (cb: (value: 'active' | 'muted') => void) => Unsubscriber;
   onUserWaveformUpdate: (cb: (value: number) => void) => Unsubscriber;
   onAgentWaveformUpdate: (cb: (value: number) => void) => Unsubscriber;
-  onTranscriptUpdate: (cb: (value: readonly ConnekzConversation[]) => void) => Unsubscriber;
+  onTranscriptUpdate: (cb: (value: readonly ConnekzTranscript[]) => void) => Unsubscriber;
   onToolCall: (cb: (payload: ConnekzToolCallPayload) => Promise<string>) => Unsubscriber;
   onConnectionQualityChange: (cb: (value: ConnectionQuality) => void) => Unsubscriber;
   onError: (cb: (value: ConnekzError) => void) => Unsubscriber;
@@ -110,8 +110,14 @@ export interface ConnekzSocketAPI {
 export interface VoiceAgentAPI {
   startAgent: () => Promise<void>;
   stopAgent: () => void;
-  makeSleep: () => void;
   injectMessage: (messageText: string) => void;
+  /**
+   * Load on-demand memories/tools (created with Load Mode "On-Demand" in the
+   * portal) into the current session by slug. Calling again replaces the
+   * previous set; an empty array clears all on-demand items. Safe to call
+   * before startAgent() — pending slugs apply when the session starts.
+   */
+  setSessionTools: (slugs: string[]) => void;
   startCaptureTest: () => void;
   stopCaptureTest: () => void;
   playCapturedAudio: () => void;

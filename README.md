@@ -104,7 +104,7 @@ const unsubAgentWave = connekzAgent.subscribe.onAgentWaveformUpdate((volume: num
   console.log('Agent volume:', volume);
 });
 
-const unsubTranscript = connekzAgent.subscribe.onTranscriptUpdate((transcript: readonly ConnekzConversation[]) => {
+const unsubTranscript = connekzAgent.subscribe.onTranscriptUpdate((transcript: readonly ConnekzTranscript[]) => {
   console.log('Transcript:', transcript);
 });
 

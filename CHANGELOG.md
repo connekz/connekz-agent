@@ -1,3 +1,25 @@
+## [2.2.0] - 2026-07-10 (Minor Release)
+
+### Added
+
+### Changed
+
+### Fixed
+
+### Security
+
+## [2.1.0] - 2026-07-10 (Minor Release)
+
+### Added
+- `setSessionTools` declared in the public TypeScript types (`VoiceAgentAPI`) — it was implemented but missing from `types.d.ts`, breaking TypeScript consumers.
+- `setSessionTools` can now be called before the socket connects — the latest slug set is queued and flushed on connection.
+- `session-tools-updated` server confirmation event is now handled (logged at debug level) instead of warning "Unknown event type".
+
+### Fixed
+- Broken type references in `types.d.ts`: `VoiceAgentStatus` → `ConnekzAgentStatus`, `ConnekzConversation` → `ConnekzTranscript`.
+- Removed phantom `makeSleep` from the public types (it was never implemented).
+- Removed the stale `./connekz-agent.css` package export — v2 injects styles at runtime and no CSS file ships in `dist/`. Consumers must remove `import '@connekz/connekz-agent/connekz-agent.css'`.
+
 ## [2.0.0] - 2026-06-23 (Major Release)
 
 ### Added
