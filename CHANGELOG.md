@@ -1,3 +1,13 @@
+## [2.3.2] - 2026-07-14 (Patch Release)
+
+### Added
+
+### Changed
+
+### Fixed
+
+### Security
+
 ## [2.3.1] - 2026-07-14 (Patch Release)
 
 ### Added
