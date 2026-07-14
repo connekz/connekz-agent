@@ -28,6 +28,17 @@ export type ConnekzTranscript = {
   forcedDisplay?: boolean; // Whether force to display this message
 }
 
+/**
+ * A single message in the full conversation history returned by
+ * `connekzAgent.getConversation()`. Covers both voice and text turns.
+ */
+export type ConnekzConversationMessage = {
+  id?: string; // Server message id (absent for not-yet-persisted local messages)
+  role: 'user' | 'ai' | 'system';
+  message: string;
+  at: string; // ISO date string (message createdAt)
+}
+
 // Export types for consumers of the package
 export type ConnekzOptions = {
   clientId: string; // Client ID for the connekz instance
@@ -122,6 +133,21 @@ export interface VoiceAgentAPI {
   stopCaptureTest: () => void;
   playCapturedAudio: () => void;
   toggleMic: () => void;
+  /**
+   * Returns the full conversation history for the current thread as a
+   * chronological snapshot (ascending by time). Includes BOTH voice and text
+   * turns — seeded from the server thread history and kept live as new messages
+   * arrive. Returns an empty array before any conversation exists.
+   *
+   * Typical use: call this inside an `onToolCall` handler (e.g. when a booking
+   * tool fires) to capture the transcript and forward it to your own backend.
+   */
+  getConversation: () => ConnekzConversationMessage[];
+  /**
+   * Returns the current chat thread id, or null before a thread is established.
+   * Useful for correlating a captured transcript with the server-side thread.
+   */
+  getThreadId: () => string | null;
   subscribe: AgentSubscribeAPI;
 }
 

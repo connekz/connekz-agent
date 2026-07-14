@@ -83,6 +83,33 @@ to clean up resources and unmount components.
   connekzAgent.stopCaptureTest(); // Stop audio capture test
   connekzAgent.playCapturedAudio(); // Playback captured audio test
   ````
+- Conversation History:
+  ````typescript
+  // Full conversation for the current thread — both voice AND text turns,
+  // seeded from server history and kept live. Chronological snapshot.
+  const history = connekzAgent.getConversation();
+  // -> ConnekzConversationMessage[]: { id?, role: 'user' | 'ai' | 'system', message, at }[]
+
+  // Current chat thread id (null before a thread is established).
+  const threadId = connekzAgent.getThreadId();
+  ````
+  Typical use — capture the transcript when a tool fires (e.g. a booking) and
+  forward it to your own backend:
+  ````typescript
+  connekzAgent.subscribe.onToolCall(async (tool) => {
+    if (tool.name === 'book_meeting') {
+      const transcript = connekzAgent.getConversation();
+      const threadId = connekzAgent.getThreadId();
+      await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ booking: tool.arguments, threadId, transcript }),
+      });
+      return 'Booking captured';
+    }
+    return 'Unknown tool';
+  });
+  ````
 
 ## Subscriptions
 Subscribe to events for realtime updates:

@@ -1,3 +1,27 @@
+## [2.3.1] - 2026-07-14 (Patch Release)
+
+### Added
+
+### Changed
+
+### Fixed
+
+### Security
+
+## [2.3.0] - 2026-07-14 (Minor Release)
+
+### Added
+
+- `connekzAgent.getConversation()` — returns the full conversation history for the current thread as a chronological `ConnekzConversationMessage[]` (`{ id?, role: 'user' | 'ai' | 'system', message, at }`). Includes BOTH voice and text turns, seeded from the server thread history and kept live. Intended to be called inside an `onToolCall` handler (e.g. when a booking tool fires) to capture the transcript and forward it to your own backend.
+- `connekzAgent.getThreadId()` — returns the current chat thread id (or `null` before a thread is established) for correlating a captured transcript with the server-side thread.
+- New exported type `ConnekzConversationMessage`.
+
+### Changed
+
+### Fixed
+
+### Security
+
 ## [2.2.1] - 2026-07-10 (Patch Release)
 
 ### Added
