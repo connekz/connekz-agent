@@ -72,23 +72,64 @@ export type ConnectionQuality = {
 /**
  * Error codes for Connekz Agent errors.
  *
- * CNKZ_ERR_1001 - Unable to reach the Connekz server (wrong URL, server down, network issue)
- * CNKZ_ERR_1002 - Invalid client ID or client secret
- * CNKZ_ERR_1003 - Usage quota exceeded (out of tokens)
- * CNKZ_ERR_1004 - Weak network connection (voice unreliable)
+ * CNKZ_ERR_1001 - Unable to reach the Connekz server (wrong URL, server down, network/proxy issue).
+ *                 The agent keeps retrying automatically, walking a websocket → polling transport ladder.
+ * CNKZ_ERR_1002 - Invalid client ID or client secret. Not retried.
+ * CNKZ_ERR_1003 - Usage quota exceeded (out of tokens / connection limit). Not retried.
+ * CNKZ_ERR_1004 - Weak network connection (voice unreliable; text chat suggested)
  * CNKZ_ERR_1005 - Agent runtime error
+ * CNKZ_ERR_1006 - Browser is offline. Reconnects automatically when connectivity returns.
+ * CNKZ_ERR_1007 - Session/ephemeral token expired. Mint a fresh token server-side and re-initialize. Not retried.
+ * CNKZ_ERR_1008 - This page's origin is not in the instance's authorized domains list. Not retried.
+ * CNKZ_ERR_1009 - Browser unsupported (no realtime transport available at all). Not retried.
+ * CNKZ_ERR_1010 - Voice unsupported in this environment (insecure context, no mic API/hardware).
+ *                 Text chat continues to work.
  */
 export type ConnekzErrorCode =
   | 'CNKZ_ERR_1001'
   | 'CNKZ_ERR_1002'
   | 'CNKZ_ERR_1003'
   | 'CNKZ_ERR_1004'
-  | 'CNKZ_ERR_1005';
+  | 'CNKZ_ERR_1005'
+  | 'CNKZ_ERR_1006'
+  | 'CNKZ_ERR_1007'
+  | 'CNKZ_ERR_1008'
+  | 'CNKZ_ERR_1009'
+  | 'CNKZ_ERR_1010';
 
 export type ConnekzError = {
   code: ConnekzErrorCode;
   message: string;
   timestamp: number;
+};
+
+/** Environment capability snapshot (see ConnekzSocketAPI.getDiagnostics). */
+export type ConnekzCapabilities = {
+  webSocket: boolean;
+  httpTransport: boolean;
+  secureContext: boolean;
+  online: boolean;
+  mediaDevices: boolean;
+  audioContext: boolean;
+  audioWorklet: boolean;
+  localStorage: boolean;
+};
+
+/**
+ * Connection internals snapshot for debugging and support tickets.
+ * `transportStrategy` is the ladder rung last attempted
+ * (websocket / polling-upgrade / polling-only); `activeTransport` is what
+ * engine.io is actually using when connected.
+ */
+export type ConnekzDiagnostics = {
+  connected: boolean;
+  connecting: boolean;
+  transportStrategy: string | null;
+  activeTransport: string | null;
+  attempts: number;
+  lastError: { code: ConnekzErrorCode; userMessage: string; devMessage: string; retryable?: boolean } | null;
+  capabilities: ConnekzCapabilities;
+  baseUrl: string;
 };
 
 // New: Subscription types
@@ -114,6 +155,12 @@ export interface ConnekzSocketAPI {
   connect: (force?: boolean) => void;
   disconnect: () => void;
   cleanup: () => void;
+  /**
+   * Snapshot of connection internals: transport in use, attempt count, last
+   * classified error and environment capabilities. Include this in bug
+   * reports/support tickets for connection issues.
+   */
+  getDiagnostics: () => ConnekzDiagnostics;
   subscribe: SocketSubscribeAPI;
 }
 

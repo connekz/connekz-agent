@@ -157,7 +157,52 @@ Socket is automatically managed with agent start/stop. The following methods ava
 connekzSocket.connect(); // Force optional
 connekzSocket.disconnect();
 connekzSocket.cleanup(); // Remove listeners
+connekzSocket.getDiagnostics(); // Connection internals snapshot (see Reliability below)
 ````
+
+## Reliability & Browser Support
+
+The agent is engineered to connect from any modern browser on any host page — including mobile Safari/Chrome and cross-site embeds — without any special setup on your side.
+
+### Transport ladder
+
+Instead of relying on Socket.IO defaults, the agent walks a transport ladder until one connects:
+
+1. **websocket** (default) — a direct websocket connection. Needs no cookies or sticky sessions, which makes it reliable behind load balancers and on browsers that block third-party cookies (Safari/iOS on cross-site embeds).
+2. **polling + websocket upgrade** — HTTP long-polling with credentials, for networks/proxies that block raw websockets.
+3. **polling only** — last resort for middleboxes that break the websocket upgrade.
+
+The last strategy that worked is remembered (localStorage, best effort), so repeat visits connect fast. Retries use exponential backoff and resume instantly when the tab becomes visible again or the browser comes back online (including iOS back/forward-cache restores).
+
+### Voice pipeline
+
+- The audio worklet processor ships **inside the bundle** (loaded from a Blob URL) — no extra file to host, no CDN dependency. If your site's CSP forbids `blob:` workers (`worker-src`), serve `worklet-processor.js` at `/connekz-worklet-processor.js` on your origin, or allow `https://storage.connekz.com`.
+- Browsers without AudioWorklet automatically fall back to ScriptProcessor-based capture.
+- iOS audio interruptions (phone calls, Siri, route changes) are detected and playback/capture resume automatically, retrying on the next tap if the browser requires a user gesture.
+- If the environment can never support voice (http page, no microphone API — e.g. some in-app browsers), the agent shows a clear message and **text chat keeps working**.
+
+### Error codes
+
+Subscribe with `connekzAgent.subscribe.onError((err) => ...)`. Codes:
+
+| Code | Meaning | Retried automatically? |
+|------|---------|------------------------|
+| `CNKZ_ERR_1001` | Server unreachable (network, proxy, server down) | Yes — transport ladder + backoff |
+| `CNKZ_ERR_1002` | Invalid clientId / clientSecret | No — fix credentials in the developer portal |
+| `CNKZ_ERR_1003` | Quota / token limit exceeded | No — manage your plan in the developer portal |
+| `CNKZ_ERR_1004` | Network too weak for voice | n/a — suggests text chat |
+| `CNKZ_ERR_1005` | Agent runtime error | n/a |
+| `CNKZ_ERR_1006` | Browser is offline | Yes — reconnects when connectivity returns |
+| `CNKZ_ERR_1007` | Session/ephemeral token expired | No — mint a fresh token and re-init |
+| `CNKZ_ERR_1008` | Page origin not in the instance's Authorized Domains | No — add the exact origin in the portal |
+| `CNKZ_ERR_1009` | Browser unsupported (no realtime transport) | No |
+| `CNKZ_ERR_1010` | Voice unsupported here (text chat still works) | No |
+
+### Troubleshooting
+
+- Call `connekzSocket.getDiagnostics()` in the browser console and include the output in support requests — it reports the transport in use, attempt counts, the last classified error, and the browser's capability snapshot.
+- `400 "Session ID unknown"` loops in the network tab mean long-polling lost its load-balancer session (typically third-party cookies blocked). The current package avoids this entirely by connecting websocket-first; if you see it, update to the latest version.
+- Voice on iOS requires the page to be served over **https** and the user to tap to start (browser autoplay policy).
 
 ## Integration Tips
 - Frontend Embedding: Mount built-in UI or use headless APIs to integrate into existing apps.

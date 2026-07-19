@@ -1,3 +1,38 @@
+## [2.4.0] - 2026-07-19 (Minor Release)
+
+### Added
+
+### Changed
+
+### Fixed
+
+### Security
+
+## [Unreleased]
+
+### Added
+
+- **Transport ladder (websocket-first)**: the socket now connects over a direct websocket by default (no cookies or load-balancer sticky sessions required), falling back to polling+upgrade and polling-only when websockets are blocked. Fixes the mobile Safari / cross-site embed failure where blocked third-party cookies caused endless `400 "Session ID unknown"` loops behind the ALB. The last working transport is remembered per browser for fast reconnects.
+- **Capability detection layer** (`Layer 0`): WebSocket/fetch, secure context, mic API, Web Audio, AudioWorklet and storage are detected up front. Impossible features fail fast with precise messages; degraded modes are chosen automatically.
+- **Inline audio worklet**: the worklet processor is bundled and loaded from a Blob URL — no same-origin file or CDN required (previous `404 connekz-worklet-processor.js` noise is gone). Same-origin file and CDN remain as CSP fallbacks, and capture falls back to ScriptProcessor on browsers without AudioWorklet.
+- **Structured server error handling**: the client now consumes the server's `connection_error` event (`INVALID_CREDENTIALS`, `TOKEN_EXPIRED`, `UNAUTHORIZED_DOMAIN`, `QUOTA_EXCEEDED`) and maps it to precise error codes instead of generic "unable to connect".
+- New error codes: `CNKZ_ERR_1006` (offline), `CNKZ_ERR_1007` (token expired), `CNKZ_ERR_1008` (unauthorized domain), `CNKZ_ERR_1009` (browser unsupported), `CNKZ_ERR_1010` (voice unsupported — text chat continues to work).
+- `connekzSocket.getDiagnostics()` — connection internals snapshot (transport, attempts, last error, capabilities) for support/debugging.
+- iOS audio robustness: WebKit `interrupted` state handling with resume-on-gesture for both capture and playback contexts.
+
+### Changed
+
+- Reconnection now uses exponential backoff with instant retry on `online`/tab-visible/bfcache-restore events; offline is surfaced as its own state instead of a server error.
+- `"Session ID unknown"` is classified as a retryable transport problem (load-balancer session affinity loss), no longer misreported as an authentication failure.
+- Mic initialization no longer retries permission-denied / no-microphone / unsupported-environment errors (fails fast with the right message; transient errors still retry).
+- Voice capture sample rate now follows the audio context rate (fixes potential pitch-shifted audio on iOS audio routes where track and context rates disagree).
+- `userIdentity` persistence and transport memory use safe storage wrappers — Safari private mode and sandboxed iframes can no longer crash init.
+- Connection error screen shows a "Retrying automatically" hint for retryable errors.
+
+### Fixed
+
+### Security
+
 ## [2.3.2] - 2026-07-14 (Patch Release)
 
 ### Added
